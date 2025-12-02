@@ -28,18 +28,18 @@
 	\maketitle
 	
 	\begin{abstract}
-		This project explores classical pattern recognition methods applied to music genre classification using audio features extracted from the GTZAN dataset. We implement and evaluate statistical (LDA, QDA) and function-approximation-based classifiers (SVM with linear and RBF kernels) using 5-fold stratified cross-validation. Preliminary results show that even with a simple feature set, classical models achieve accuracies well above chance, with the RBF-kernel SVM performing best. Additional analysis includes PCA visualization of feature separability and fold-level performance statistics.
+		This project explores classical pattern recognition methods applied to music genre classification using audio features extracted from the GTZAN dataset. I implement and evaluate statistical (LDA, QDA) and function-approximation-based classifiers (SVM with linear and RBF kernels) using 5-fold stratified cross-validation. Preliminary results show that even with a simple feature set, classical models achieve accuracies well above chance, with the RBF-kernel SVM performing best. Additional analysis includes PCA visualization of feature separability and fold-level performance statistics.
 	\end{abstract}
 	
 	\section{Introduction}
 	Music genre classification is a longstanding task in music information retrieval, involving the assignment of audio samples to predefined genre categories. Despite the dominance of deep learning in recent years, classical pattern recognition methods remain valuable for their speed, interpretability, and alignment with theoretical learning frameworks. 
 	
-	In this project, we investigate several classical models in the context of multiclass music genre classification. The work is motivated by both pedagogical alignment with lectures in pattern recognition and personal research interests in audio classification. Our goals are to evaluate performance, interpret model behavior, and visualize feature-space structure using established tools from pattern recognition.
+	In this project, I investigate several classical models in the context of multiclass music genre classification. The work is motivated by both pedagogical alignment with lectures in pattern recognition and personal research interests in audio classification. My goals are to evaluate performance, interpret model behavior, and visualize feature-space structure using established tools from pattern recognition.
 	
-	\section{Dataset and Feature Extraction}
-	We use the GTZAN Genre Collection, a benchmark dataset consisting of 1,000 audio clips (30s each) evenly distributed across 10 genre labels: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae, and rock. We downloaded the data via Kaggle and used the ``genres\_original'' directory.
+	\section{Dataset and feature extraction}
+	I use the GTZAN Genre Collection, a benchmark dataset consisting of 1,000 audio clips (30s each) evenly distributed across 10 genre labels: blues, classical, country, disco, hip-hop, jazz, metal, pop, reggae, and rock. I downloaded the data via Kaggle and used the ``genres\_original'' directory.
 	
-	To convert raw audio to usable feature vectors, we used the \texttt{librosa} library in Python. From each audio file, we extracted the following:
+	To convert raw audio to usable feature vectors, I used the \texttt{librosa} library in Python. From each audio file, I extracted the following:
 	
 	\begin{itemize}
 		\item \textbf{MFCC (Mel-Frequency Cepstral Coefficients)}: 13-coefficient mean and standard deviation
@@ -52,7 +52,7 @@
 	These were aggregated into a fixed-length vector per clip. The dataset was standardized and cleaned to yield 999 usable samples. Features were saved to \texttt{features/features.csv}.
 	
 	\section{Methods}
-	We implemented and compared four classifiers:
+	I implemented and compared four classifiers:
 	
 	\begin{itemize}
 		\item \textbf{Linear Discriminant Analysis (LDA)}: Assumes Gaussian class-conditional densities with shared covariances.
@@ -63,7 +63,7 @@
 	
 	All models were implemented in \texttt{scikit-learn}. Each was wrapped in a pipeline that included standardization via \texttt{StandardScaler}. Evaluation was performed using \texttt{StratifiedKFold} with 5 splits and accuracy as the scoring metric.
 	
-	We extended basic evaluation by computing:
+	I extended basic evaluation by computing:
 	\begin{itemize}
 		\item Mean and standard deviation of accuracy across folds
 		\item Total number of correct and incorrect predictions
@@ -71,7 +71,7 @@
 		\item PCA visualization of the standardized feature matrix
 	\end{itemize}
 	
-	\subsection{Code Organization}
+	\subsection{Code organization}
 	Code was modularized into:
 	\begin{itemize}
 		\item \texttt{extract\_features.py} for feature generation
@@ -80,9 +80,11 @@
 	
 	The repository is publicly hosted at: \url{https://github.com/esomtoochiobi3/649-project}
 	
-	\section{Preliminary Results}
-	\subsection{Classifier Performance Summary}
+	\section{Preliminary results}
+	\subsection{Classifier performance summary}
 	\begin{table}[H]
+		\caption{Summary of classifier accuracy and prediction counts}
+		\label{classifier-accuracy-prediction-counts}
 		\centering
 		\begin{tabular}{lccccc}
 			\toprule
@@ -94,11 +96,14 @@
 			SVM (RBF) & \textbf{0.4925} & \textbf{0.0078} & 492 & 507 & 999 \\
 			\bottomrule
 		\end{tabular}
-		\caption{Summary of classifier accuracy and prediction counts}
 	\end{table}
+
+	The summary table shows the overall performance of each classifier, including mean accuracy across folds, standard deviation, and total number of correct versus incorrect predictions. SVM with an RBF kernel achieved the highest accuracy and showed the least variation across folds, suggesting more consistent generalization. In contrast, LDA and QDA had the lowest accuracy and highest variability respectively, indicating greater sensitivity to dataset structure.
 	
-	\subsection{Fold-by-Fold Accuracy}
+	\subsection{Fold-by-fold accuracy}
 	\begin{table}[H]
+		\caption{Accuracy per fold across classifiers}
+		\label{each-fold-accuracy-for-classifiers}
 		\centering
 		\begin{tabular}{lcccc}
 			\toprule
@@ -111,20 +116,21 @@
 			5 & 0.4573 & 0.4774 & 0.4573 & 0.4874 \\
 			\bottomrule
 		\end{tabular}
-		\caption{Accuracy per fold across classifiers}
 	\end{table}
+
+	The fold-by-fold results provide a detailed look at how each model performs across different validation splits. While all classifiers exhibit some fluctuation, SVM-RBF shows a relatively stable performance across folds. This further supports the observation that nonlinear and flexible models may better accommodate the real-world variability in audio data.
 	
-	\subsection{PCA Visualization}
+	\subsection{PCA visualization}
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{pca_plot.png}
 		\caption{PCA projection of audio features colored by genre}
 	\end{figure}
 	
-	The PCA plot shows moderate genre separability. Genres like classical and metal form more distinct clusters, whereas others such as pop, rock, and hip-hop overlap significantly. This supports the relatively low accuracies of linear models and highlights the utility of nonlinear classifiers like SVM-RBF.
+	The PCA plot shows moderate genre separability. Genres like metal and pop form more distinct clusters, whereas others such as reggae and rock overlap significantly. This supports the relatively low accuracies of linear models and highlights the utility of nonlinear classifiers like SVM-RBF.
 	
-	\section{Next Steps}
-	We plan to:
+	\section{Next steps}
+	I plan to:
 	\begin{itemize}
 		\item Add more temporal features (e.g., MFCC deltas)
 		\item Visualize confusion matrices to understand genre-level misclassifications
@@ -135,8 +141,10 @@
 	
 	\section*{References}
 	\small
-	[1] Ho Kin Pou, J., Rao, H.K., Bhambhani, G., Joseph, J., \& Prakash, S.P.J. (2023). \textit{Music Genre Classification using Machine Learning}. In Proceedings of the 4th International Conference on Communication and Computational Technologies (ICCCT 2023). https://doi.org/10.1007/978-981-99-2056-1\_22
+	[1] Ho Kin Pou, J., Rao, H.K., Bhambhani, G., Joseph, J., \& Prakash, S.P.J. \textit{Music Genre Classification using Machine Learning}. In Proceedings of the 4th International Virtual Conference on Advances in Computing and Information Technology (2022). https://www.riverpublishers.com/pdf/ebook/chapter/RP\_9788770229005C53.pdf
 	
-	[2] Gourisaria, M.K., Agrawal, R., Sahni, M., \& Singh, P.K. (2024). \textit{Comparative Analysis of Audio Classification with MFCC and STFT Features Using Machine Learning Techniques}. International Journal of Information Technology. https://doi.org/10.1007/s41870-024-01501-w
+	[2] Gourisaria, M.K., Agrawal, R., Sahni, M. et al. \textit{Comparative analysis of audio classification with MFCC and STFT features using machine learning techniques}. Discov Internet Things 4, 1 (2024). https://doi.org/10.1007/s43926-023-00049-y
+	
+	
 	
 \end{document}
