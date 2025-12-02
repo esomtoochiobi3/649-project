@@ -56,11 +56,11 @@ def main():
                 feats['label'] = genre
                 rows.append(feats)
             except Exception as e:
-                print(f"⚠️ Error processing {file_path}: {e}")
+                print(f"Error processing {file_path}: {e}")
 
     df = pd.DataFrame(rows)
     df.to_csv(OUTPUT_CSV, index=False)
-    print(f"\n✅ Features saved to: {OUTPUT_CSV}")
+    print(f"\n Features saved to: {OUTPUT_CSV}")
 
 if __name__ == "__main__":
     main()
