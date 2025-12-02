@@ -7,7 +7,7 @@ This project explores classical pattern recognition techniques (LDA, QDA, SVM) f
 Dataset: https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification?resource=download
 
 
-# Project Structure
+## Project Structure
 649-project/
 ├── code/
 │   ├── extract_features.py         # audio preprocessing and feature extraction
