@@ -1,0 +1,5 @@
+Model,Mean Accuracy,Std Dev,Correct,Incorrect,Total Samples
+LDA,0.4455,0.0161,445,554,999
+QDA,0.4775,0.0194,477,522,999
+SVM (Linear),0.4615,0.0184,461,538,999
+SVM (RBF),0.4925,0.0078,492,507,999
