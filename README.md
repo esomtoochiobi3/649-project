@@ -6,8 +6,9 @@ This project explores classical pattern recognition techniques (LDA, QDA, SVM) f
 
 Dataset: https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genre-classification?resource=download
 
-
+<pre lang="markdown">
 ## Project Structure
+<code>
 649-project/
 ├── code/
 │   ├── extract_features.py         # audio preprocessing and feature extraction
@@ -34,9 +35,10 @@ Dataset: https://www.kaggle.com/datasets/andradaolteanu/gtzan-dataset-music-genr
 ├── .gitignore
 ├── README.md
 └── requirements.txt                # python dependencies
+</code> </pre>
 
 
-# Requirements
+## Requirements
 - Python 3.10+
 - `scikit-learn`, `librosa`, `numpy`, `pandas`, `matplotlib`, `seaborn`, `tqdm`
 
